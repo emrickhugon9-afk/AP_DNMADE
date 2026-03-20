@@ -1,0 +1,509 @@
+/* ------------------- Général ------------------- */
+:root {
+    --primary: #301014;
+    --border: #301014;
+    --background: #edf4ed;
+    --radius: 20px;
+}
+
+* {
+    font-family: Bookman, URW Bookman L, serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #edf4ed;
+    margin: 0 auto;
+    height: 500px;
+    width: 80%;
+    background-image: url("../img/fondmarron.jpg");
+    background-image: linear-gradient;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.colorwhite {
+    color: white
+}
+
+.container {
+    max-width: 1200px;  /* Largeur maximale sur grands écrans */
+    margin: 0 auto;     /* Centre horizontalement */
+    padding: 0 1rem;    /* Espacement sur les côtés */
+}
+
+.header-content {
+    display: flex;                    /* Layout flexible */
+    align-items: center;             /* Centre verticalement */
+    justify-content: space-between;  /* Espace entre logo et navigation */
+    height: 4rem;                    /* Hauteur fixe du header */
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #301014;
+}
+
+.logo .highlight {
+    color: var(--primary);          /* Prénom en couleur primaire */
+}
+
+.logo .muted {
+    color: var(--muted-foreground); /* Nom en couleur atténuée */
+}
+
+.nav {
+    display: fixed;
+}
+
+.form-input {
+    width: 50%;
+    padding: 0.75rem;                   /* Espacement interne*/
+    border: 1px solid var(--border);          /* Bordure marron */
+    border-radius: var(--radius);
+    background-color: var(--background);          /* Fond vert clair */
+    color: var(--primary);                     /* Texte marron */
+    font-size: 1rem;
+}
+
+
+/* ------------------- Header ------------------- */
+header {
+    background-color: #edf4ed;
+}
+
+.header {
+    position: fixed;                          /* Reste fixe lors du scroll */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;                           /* Au-dessus des autres éléments */
+    background: rgba(255, 255, 255, 0.4);    /* Fond semi-transparent */
+    backdrop-filter: blur(12px);             /* Effet de flou d'arrière-plan moderne */
+    border-bottom: 1px solid var(--border);  /* Bordure subtile en bas */
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 10px;
+}
+
+/* ------------------- Titres et textes ------------------- */
+h1 {
+    font-size: 50px;
+    color: #edf4ed;
+    text-align: center;
+}
+
+h3 {
+    color: #301014;
+    text-align: center;
+}
+
+
+.millieu {
+    text-align: center;
+}
+
+/* ------------------- Sections ------------------- */
+.section-header {
+    color: #edf4ed;
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-title {
+    text-align: center;
+    color: #edf4ed;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: 1rem;
+}
+
+.title2{
+text-align: center;
+    color: #301014;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: 4rem;
+}
+
+.section-description {
+    text-align: center;
+    font-size: 1.125rem;
+    color: var(--muted-foreground);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.section-competences{
+    text-align: center;
+    font-size: 1.125rem;
+    color: #301014;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ------------------- Boutons ------------------- */
+.boutton1,
+.boutton-centre {
+    border: 2px solid #301014;
+    text-decoration: none;
+    background-color: #301014;
+    color: #edf4ed;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Style spécifique pour les boutons HTML */
+button.boutton1 {
+    height: auto;
+    border: 2px solid #301014;
+    padding: 10px 20px;
+}
+
+.boutton1,
+.boutton-longue {
+    margin-left: 0;
+    margin-right: 0;
+}  
+
+.boutton1:hover,
+.boutton-centre:hover {
+    background-color: #51292e;
+    border-color: #301014;
+}
+
+.boutton-centre.lucide {
+    width: 20px;
+    height: 20px;
+    color: #edf4ed;
+}
+
+.button-centré {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+/* ------------------- Conteneurs ------------------- */
+.text-container {
+    color: #edf4ed;
+    margin: 0 auto;
+    max-width: 700px;
+    text-align: center;
+    display: block;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+/* ------------------- Divers ------------------- */
+hr {
+    border: none;
+    height: 0.5px;
+    background-color: black;
+    width: 100%;
+    margin: 0;
+}
+
+/* ===============================================
+    CARTES - STYLES GÉNÉRAUX
+    =============================================== */
+.card {
+    background-color: #abd1b5;             /* Fond de carte */
+    border: 1px solid var(--border);     /* Bordure subtile */
+    border-radius: 20px;        /* Coins arrondis */
+    overflow: hidden;                    /* Cache le débordement */
+    transition: box-shadow 0.2s;         /* Animation d'ombre */
+    color: #301014;
+}   
+
+.cardtaille {
+    width: 400px;
+    height: 200px;
+    color: #79B791;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px #301014; /* Ombre portée douce */
+}
+
+.card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border); /* Ligne de séparation */  
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;                     /* Gras pour la hiérarchie */
+    margin-bottom: 0.5rem;
+    color: #301014;
+}
+
+.card-content {
+    padding: 1.5rem;                     /* Espacement interne généreux */
+    color: #301014;
+}
+
+.grid {
+    display: grid;                       /* Layout en grille CSS */
+    gap: 2rem;                          /* Espacement entre les éléments */
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* ===============================================
+    SECTION COMPÉTENCES - STYLES SPÉCIFIQUES
+    =============================================== */
+
+/* Barre de progression - conteneur */
+.progress-bar {
+    background-color: #edf4ed;            /* Fond de la barre vide */
+    height: 0.5rem;                     /* Hauteur fine et élégante */
+    border-radius: 0.25rem;             /* Coins arrondis */
+    overflow: hidden;                   /* Cache les débordements */
+}
+
+/* Barre de progression - remplissage */
+.progress-fill {
+    height: 100%;
+    background-color: #51291e;         /* Couleur de progression */
+    transition: width 0.5s ease;       /* Animation fluide du remplissage */
+}
+
+/* Élément de compétence individuel */
+.skill-item {
+    margin-bottom: 1.5rem;              /* Espacement entre les compétences */
+}
+
+/* En-tête de compétence (nom + pourcentage) */
+.skill-header {
+    display: flex;
+    justify-content: space-between;     /* Nom à gauche, pourcentage à droite */
+    margin-bottom: 0.5rem;
+    color: #301014;
+}
+
+/* ===============================================
+   SYSTÈME DE BADGES
+   =============================================== */
+
+/* Badge de base pour technologies et compétences */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;            /* Espacement interne compact */
+    background-color: #abd1b5;
+    border-radius: 0.25rem;             /* Coins légèrement arrondis */
+    font-size: 0.75rem;                 /* Texte plus petit */
+    margin: 0.25rem;                    /* Espacement autour du badge */
+}
+
+/* Variante badge avec contour */
+.badge-outline {
+    background-color: #abd1b5;
+}
+
+/* -------------------------------------- */
+
+/* Classes helper pour alignement et espacement rapides */
+.text-center { 
+    text-align: center; 
+}
+
+.mt-4 { 
+    max-width: 410px;  /* Largeur maximale sur grands écrans */
+    margin: 0 auto;     /* Centre horizontalement */
+    padding: 0 1rem;    /* Espacement sur les côtés */
+    margin-top: 1rem;
+}
+
+/* ===============================================
+    STYLES GÉNÉRIQUES POUR TOUTES LES SECTIONS
+    =============================================== */
+        
+/* Espacement vertical standard pour toutes les sections */
+.section {
+    padding: 5rem 0;                     /* Espacement généreux haut/bas */
+}
+
+/* En-tête de section standardisé */
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;                 /* Espace avant le contenu de la section */
+    color: #301014;
+}
+
+/* Titre de section responsive */
+.section-title {
+    font-size: clamp(2rem, 4vw, 2.5rem); /* Taille adaptative */
+    margin-bottom: 1rem;
+    color: #301014;
+}
+
+/* Description de section */
+.section-description {
+    font-size: 1.125rem;                 /* Légèrement plus gros que le texte normal */
+    color: var(--muted-foreground);      /* Couleur atténuée */
+    max-width: 600px;                    /* Limite pour la lisibilité */
+    margin: 0 auto;                      /* Centre le texte */
+    color: #301014;
+}
+
+/* ===============================================
+           SECTION CONTACT - STYLES SPÉCIFIQUES
+    =============================================== */
+        
+        /* Grille de contact (informations + formulaire) */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;      /* 2 colonnes égales */
+            gap: 3rem;                          /* Grand espacement entre les colonnes */
+        }
+
+        /* Item de contact (icône + texte) */
+        .contact-item {
+            display: flex;
+            align-items: center;                /* Alignement vertical centré */
+            gap: 1rem;                         /* Espace entre icône et texte */
+            margin-bottom: 1.5rem;
+        }
+
+        /* Conteneur d'icône de contact */
+        .contact-icon-wrapper {
+            width: 3rem;
+            height: 3rem;
+            background: rgba(3, 2, 19, 0.1);   /* Fond semi-transparent */
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Icône de contact */
+        .contact-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: var(--primary);
+        }
+
+/* ===============================================
+       FORMULAIRE DE CONTACT
+   =============================================== */
+        
+        /* Groupe de champ de formulaire */
+        .form-group {
+            margin-bottom: 1.5rem;              /* Espacement entre les champs */
+        }
+
+        /* Label de formulaire */
+        .form-label {
+            display: block;                     /* Prend toute la largeur */
+            margin-bottom: 0.5rem;
+            font-weight: 500;                   /* Légèrement gras */
+        }
+
+        /* Champ de saisie de base */
+        .form-input {
+            width: 80%;
+            padding: 0.75rem;                   /* Espacement interne confortable */
+            border: 1px solid var(--border);   /* Bordure subtile */
+            border-radius: var(--radius);
+            background: var(--background);
+            font-size: 1rem;
+        }
+
+        /* État focus des champs */
+        .form-input:focus {
+            outline: none;                      /* Supprime le contour par défaut */
+            border-color: var(--primary);      /* Bordure colorée au focus */
+        }
+
+        /* Zone de texte spécifique */
+        .form-textarea {
+            resize: vertical;                   /* Permet uniquement le redimensionnement vertical */
+            min-height: 120px;                 /* Hauteur minimale */
+        }
+
+/* ===============================================
+       FOOTER - PIED DE PAGE
+    =============================================== */
+        
+        /* Footer principal */
+        .footer {
+            background: var(--secondary);          /* Fond différent pour marquer la fin */
+            border-top: 1px solid var(--border);   /* Séparation visuelle */
+            padding: 3rem 0;                      /* Espacement généreux */
+            color: #301014;
+        }
+
+        /* Grille du footer */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Colonnes adaptatives */
+            gap: 2rem;
+            text-align: center;                    /* Texte centré sur mobile */
+            margin-bottom: 3rem;
+        }
+
+        /* Titre de section footer */
+        .footer-section h3 {
+            margin-bottom: 1rem;                   /* Espacement sous le titre */
+            color: #301014;
+        }
+
+        /* Liens du footer */
+        .footer-links {
+            display: flex;
+            flex-direction: column;                /* Liens empilés verticalement */
+            gap: 0.5rem;
+            color: #301014;
+        }
+
+        /* Style des liens footer */
+        .footer-link {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            transition: color 0.2s;                /* Animation de couleur */
+            color: #301014;
+        }
+
+        .footer-link:hover {
+            color: var(--foreground);              /* Change de couleur au survol */
+            color: #51291e;
+        }
+
+        /* Bas du footer avec copyright */
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;                     /* Espacement avant la ligne de séparation */
+            border-top: 1px solid var(--border);   /* Ligne de séparation */
+            color: var(--muted-foreground);
+            font-size: 0.875rem;                   /* Texte plus petit */
+            color: #301014;
+        }
