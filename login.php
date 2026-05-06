@@ -1,27 +1,33 @@
+<?php if (isset($erreur)) { ?>
+    <p style="color:red;"><?php echo $erreur; ?></p>
+<?php } ?>
 <?php
 session_start();
 
-// 1. On traite le formulaire UNIQUEMENT si le bouton a été cliqué
 if (isset($_POST['submit'])) {
 
-    // 2. On vérifie si les champs sont vides
-    if (!empty($_POST['login']) && !empty($_POST['password'])) {
-
+    if (empty($_POST['login']) || empty($_POST['password'])) {
+        $erreur = "Champs obligatoires !";
+    } 
+    else {
         $login = $_POST['login'];
         $password = $_POST['password'];
-
-        // 3. On vérifie les identifiants
+        $m = '/^\S*(?=\S{8,})(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$/';
+            
+            if(isset($_POST['password'])){
+                if(preg_match($m, $_POST['password'])){
+                    echo 'Le mot de passe choisi convient';
+                }else{
+                    echo 'Le mot de passe choisi ne répond pas aux critères';
+                }
+            }
         if ($login === "admin" && $password === "1234") {
-            $_SESSION["user"] = $login; // On crée la session
-            header("Location: index.php"); // REDIRECTION VERS L'ACCUEIL SEULEMENT ICI
-            exit();
+            $_SESSION["user"] = $login;
+            header("Location: index.html"); 
+            exit(); 
         } else {
-            $erreur = "Login ou mot de passe incorrect";
+            $erreur = "Identifiants incorrects";
         }
-
-    } else {
-        // Si les champs sont vides, on reste ici et on prépare un message
-        $erreur = "Veuillez remplir tous les champs";
     }
 }
 ?>
