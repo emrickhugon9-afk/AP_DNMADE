@@ -7,17 +7,7 @@ session_start();
 $erreur = "";
 $succes = "";
 
-$dbname = 'bdd_dnmade';
-$host = 'localhost';
-$user = 'root';
-
-try{
-    $bdd = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, '');
-    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (Exception $e) {
-    die('Erreur de connexion à Laragon : ' . $e->getMessage());
-}
-
+require_once 'config_bdd.php';
 
 if (isset($_POST['submit'])) {
     
@@ -51,4 +41,6 @@ if (isset($_POST['submit'])) {
             $erreur = "Erreur : Vous devez être connecté.";
         }
     }
+    header("Location:login.html)");
+    exit();
 }   

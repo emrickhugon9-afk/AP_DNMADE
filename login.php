@@ -5,6 +5,8 @@ session_set_cookie_params($temps_inactivite);
 
 session_start();
 
+require_once 'config_bdd.php';
+
 if (isset($_POST['submit'])) {
 
     if (empty($_POST['login']) || empty($_POST['password'])) {
@@ -15,6 +17,14 @@ if (isset($_POST['submit'])) {
     else {
         $login = $_POST['login'];
         $password = $_POST['password'];
+
+            if(isset($_POST['login'])){
+                if (preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $_POST['login'])) {
+                    echo "L'adresse mail n'est pas valide";
+                } else {
+                    echo 'Le mot de passe choisi ne répond pas aux critères';
+                }
+            }
             
             if(isset($_POST['password'])){
                 if (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $_POST['password'])) {
