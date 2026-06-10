@@ -5,6 +5,7 @@
      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
          <div class="sidebar-brand-icon">
              <img src="img/logo_costumerie.png" alt="Logo" width="80" height="60" style="border-radius:30%;">
+
          </div>
 
      </a>
