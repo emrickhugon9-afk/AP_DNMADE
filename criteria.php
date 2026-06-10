@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Blank</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- DataTables -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <?php include 'sidebar.php'; ?>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                </nav>
+                <!-- End Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <?php
+                    include 'pdo_config.php';
+
+                    try {
+                        $requete = $db->prepare('SELECT * FROM CRITERIA');
+                        $requete->execute();
+                        $criteres = $requete->fetchAll();
+                    } catch (PDOException $e) {
+                        echo "Erreur : " . $e->getMessage();
+                    }
+                    ?>
+
+                    <h1 class="h3 mb-4 text-gray-800">Liste des critères</h1>
+
+                    <!-- Bouton Ajouter -->
+                    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addModal">
+                        <i class="bi bi-plus-circle"></i> Ajouter un critère
+                    </button>
+
+                    <!-- Modal Ajouter -->
+                    <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <form method="post" action="criteria_add.php">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">
+                                            Ajouter un critère
+                                        </h5>
+
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span>&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+
+                                        <div class="form-group">
+                                            <label>Nom</label>
+
+                                            <input type="text"
+                                                name="criteria"
+                                                class="form-control"
+                                                required>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+
+                                        <button type="button"
+                                            class="btn btn-secondary"
+                                            data-dismiss="modal">
+                                            Annuler
+                                        </button>
+
+                                        <button type="submit"
+                                            class="btn btn-primary">
+                                            Ajouter
+                                        </button>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tableau -->
+                    <div class="card shadow mb-4">
+
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                Tableau des critères
+                            </h6>
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="table-responsive">
+
+                                <table class="table table-bordered"
+                                    id="dataTable"
+                                    width="100%"
+                                    cellspacing="0">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nom</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+
+
+
+                                    <tbody>
+
+                                        <?php foreach ($criteres as $critere): ?>
+
+                                            <tr>
+
+                                                <td>
+                                                    <?= $critere['id_criteria'] ?>
+                                                </td>
+
+                                                <td>
+                                                    <?= $critere['criteria'] ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    echo "
+                                                    <a href='#' class='btn btn-sm btn-warning' data-toggle='modal' data-target='#editModal" . $critere['id_criteria'] . "'><i class='bi bi-pencil-square'></i> Modifier</a>
+                                                    <a href='#' class='btn btn-sm btn-danger' data-toggle='modal' data-target='#deleteModal" . $critere['id_criteria'] . "'><i class='bi bi-trash3'></i> Supprimer</a>
+                                                    "
+                                                    ?>
+                                                </td>
+                                            </tr>
+
+                                            <?php
+                                            // Modal Edit 
+                                            echo "
+                                            
+    <div class='modal fade' id='editModal" . $critere['id_criteria'] . "' tabindex='-1' aria-hidden='true'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <form method='post' action='criteria_edit.php'>
+            <div class='modal-header'>
+              <h5 class='modal-title'>Modifier " . $critere['criteria'] . "</h5>
+              <button type='button' class='close' data-dismiss='modal' aria-label='Fermer'>
+                <span aria-hidden='true'>&times;</span>
+              </button>
+            </div>
+            <div class='modal-body'>
+              <input type='hidden' name='id' value='" . $critere['id_criteria'] . "'>
+              <div class='form-group'>
+                <label>Nom</label>
+                <input type='text' name='criteria' class='form-control' required value='" . $critere['criteria'] . "'>
+              </div>
+            </div>
+            <div class='modal-footer'>
+              <button type='button' class='btn btn-secondary' data-dismiss='modal'>Annuler</button>
+              <button type='submit' class='btn btn-primary'>Modifier</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    ";
+
+                                            // Modal Delete
+                                            echo "
+    <div class='modal fade' id='deleteModal" . $critere['id_criteria'] . "' tabindex='-1' role='dialog'>
+      <div class='modal-dialog' role='document'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h5 class='modal-title'>Supprimer un critère</h5>
+            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>
+          <div class='modal-body'>
+            <p>Voulez-vous vraiment supprimer " . $critere['criteria'] . " ?</p>
+          </div>
+          <div class='modal-footer'>
+            <a href='criteria_delete.php?id=" . $critere['id_criteria'] . "' class='btn btn-danger'>Supprimer</a>
+            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Annuler</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    ";
+                                            ?>
+
+
+                                        <?php endforeach; ?>
+
+
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End Main Content -->
+
+            <!-- Footer -->
+            <footer class=" sticky-footer bg-white">
+
+                <div class="container my-auto">
+
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+
+                </div>
+
+            </footer>
+            <!-- End Footer -->
+
+        </div>
+        <!-- End Content Wrapper -->
+
+    </div>
+    <!-- End Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- DataTables Demo -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+</body>
+
+
+</html>
