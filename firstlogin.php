@@ -9,8 +9,14 @@ $succes = "";
 
 require_once 'config_bdd.php';
 
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.html");
+    exit();
+}
+
 if (isset($_POST['submit'])) {
-    
+
+-    
     $pwd  = $_POST['password'] ?? '';
     $rpwd = $_POST['repet_password'] ?? '';
     $m = '/^\S*(?=\S{8,})(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$/';
@@ -30,7 +36,7 @@ if (isset($_POST['submit'])) {
             try {
                 $req = $bdd->prepare("UPDATE utilisateurs SET mot_de_passe = :password WHERE id = :id");
                 $req->execute([
-                    'password' => $password_hache,
+                                       'password' => $password_hache,
                     'id' => $user_id
                 ]);
                 $succes = "Le mot de passe vient d'être modifié !";
