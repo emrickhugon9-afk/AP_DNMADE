@@ -1,45 +1,146 @@
 <?php
 $temps_inactivite = 1440; 
-
 session_set_cookie_params($temps_inactivite);
-
 session_start();
 
 require_once 'config_bdd.php';
 
-if (isset($_POST['submit'])) {
+$erreur = "";
+
+// CHANGEMENT ICI : On détecte la méthode d'envoi globale
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($_POST['login']) || empty($_POST['password'])) {
         $erreur = "Champs obligatoires !";
-        $_POST['login'] = '';
-        $_POST['password'] = '';
     }
     else {
         $login = $_POST['login'];
         $password = $_POST['password'];
 
-            if(isset($_POST['login'])){
-                if (preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $_POST['login'])) {
-                    echo "L'adresse mail n'est pas valide";
-                } else {
-                    echo 'Le mot de passe choisi ne répond pas aux critères';
-                }
+        if (!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $login)) {
+            $erreur = "L'adresse email n'est pas valide.";
+        }
+        else {
+            try {
+                $req = $bdd->prepare("SELECT * FROM utilisateurs WHERE email = :login");
+                $req->execute(['login' => $login]);
+                $user = $req->fetch(PDO::FETCH_ASSOC);
+
+                if (password_verify($password, $user['passwords']) || $password == $user['passwords']) {
+    
+                    $_SESSION['user_id'] = isset($user['id_utilisateurs']) ? $user['id_utilisateurs'] : $user['id_utilisateur'];
+                    $_SESSION['last_activity'] = time(); 
+
+                    if ($user['first_log'] == 1) {
+                        header("Location: firstlogin.php");
+                        exit();
+                        } else {
+                            header("Location: index.php");
+                            exit();
+                        }
+                    } else {
+                    $erreur = "Identifiants incorrects !";
+                    }
+            } catch (Exception $e) {
+                $erreur = "Une erreur est survenue : " . $e->getMessage();
             }
-            
-            if(isset($_POST['password'])){
-                if (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $_POST['password'])) {
-                    echo 'Le mot de passe choisi convient';
-                } else {
-                    echo 'Le mot de passe choisi ne répond pas aux critères';
-                }
-            } 
-        if ($login === "admin" && $password === "1234") {
-            $_SESSION["user"] = $login;
-            header("Location: index.html"); 
-            exit(); 
-        } else {
-            $erreur = "Identifiants incorrects";
         }
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Login</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container vh-100 d-flex justify-content-center align-items-center">
+
+        <!-- Outer Row -->
+        <div class="center w-50 justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="center">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Connectez-vous !</h1>
+                                    </div>
+                                    <form class="user" action="" method="post">
+                                        <div class="form-group">
+                                            <input type="text" name="login" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="Email, login...">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="password" class="form-control form-control-user"
+                                                id="exampleInputPassword" placeholder="Mot de passe">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                <label class="custom-control-label" for="customCheck">Se souvenir de moi</label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" name ="submit" class="btn btn-primary btn-user btn-block">
+                                            Connexion
+                                        </button>
+                                    </form>
+                                </br>
+                                    <div class="text-center">
+                                        <a class="small" href="forgot-password.html">Mot de passe oublié ?</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+        <?php if (isset($erreur)) { ?>
+            <p style="color:red;"><?php echo $erreur; ?></p>
+        <?php } ?>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+</body>
+</html>
