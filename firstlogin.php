@@ -1,49 +1,58 @@
 <?php
-$temps_inactivite = 1440; 
-session_set_cookie_params($temps_inactivite);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
+$erreur = "";
+$succes = "";
 
 require_once 'config_bdd.php';
 
-$erreur = "";
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
 
-// CHANGEMENT ICI : On détecte la méthode d'envoi globale
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['submit'])) {
 
-    if (empty($_POST['login']) || empty($_POST['password'])) {
-        $erreur = "Champs obligatoires !";
-    }
-    else {
-        $login = $_POST['login'];
-        $password = $_POST['password'];
+    $pwd  = $_POST['password'] ?? '';
+    $rpwd = $_POST['repet_password'] ?? '';
+    $m = '/^\S*(?=\S{8,})(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$/';
 
-        if (!preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $login)) {
-            $erreur = "L'adresse email n'est pas valide.";
-        }
-        else {
+    if (empty($pwd) || empty($rpwd)) {
+        $erreur = "Veuillez remplir tous les champs.";
+    } elseif ($pwd !== $rpwd) {
+        $erreur = "Les mots de passe ne sont pas identiques.";
+    } elseif (!preg_match($m, $pwd)) {
+        $erreur = "Le mot de passe doit contenir 8 caractères, une majuscule, un chiffre et un symbole.";
+    } else {
+        $pwd_valeur = password_hash($pwd, PASSWORD_DEFAULT);
+        
+        $user_id = $_SESSION['user_id'] ?? null; 
+
+        if ($user_id) {
             try {
-                $req = $bdd->prepare("SELECT * FROM utilisateurs WHERE email = :login");
-                $req->execute(['login' => $login]);
-                $user = $req->fetch(PDO::FETCH_ASSOC);
+                $check = $bdd->query("SELECT * FROM utilisateurs LIMIT 1")->fetch(PDO::FETCH_ASSOC);
+                $colonne_id = isset($check['id_utilisateurs']) ? 'id_utilisateurs' : 'id_utilisateur';
 
-                if (password_verify($password, $user['passwords']) || $password == $user['passwords']) {
-    
-                    $_SESSION['user_id'] = isset($user['id_utilisateurs']) ? $user['id_utilisateurs'] : $user['id_utilisateur'];
-                    $_SESSION['last_activity'] = time(); 
+                $req = $bdd->prepare("UPDATE utilisateurs SET passwords = :password, first_log = 0 WHERE $colonne_id = :id");
+                $req->execute([
+                    'password' => $pwd_valeur,
+                    'id' => $user_id
+                ]);
+                
+                $_SESSION = array();
+                session_destroy();
 
-                    if ($user['first_log'] == 1) {
-                        header("Location: firstlogin.php");
-                        exit();
-                        } else {
-                            header("Location: index.php");
-                            exit();
-                        }
-                    } else {
-                    $erreur = "Identifiants incorrects !";
-                    }
+                header("Location: login.php?statut=modifie");
+                exit();
+                
             } catch (Exception $e) {
                 $erreur = "Une erreur est survenue : " . $e->getMessage();
             }
+        } else {
+            $erreur = "Erreur : Vous devez être connecté.";
         }
     }
 }
@@ -60,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Login</title>
+    <title>First Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -90,25 +99,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Connectez-vous !</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Bienvenue !</h1>
                                     </div>
-                                    <form class="user" action="" method="post">
-                                        <div class="form-group">
-                                            <input type="text" name="login" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Email, login...">
-                                        </div>
+                                    <?php if ($erreur): ?>
+                                        <p style="color: red; font-weight: bold;"><?php echo $erreur; ?></p>
+                                    <?php endif; ?>
+
+                                    <?php if ($succes): ?>
+                                        <p style="color: green; font-weight: bold;"><?php echo $succes; ?></p>
+                                    <?php endif; ?>
+                                    <form class="first_login" action="" method="post">
                                         <div class="form-group">
                                             <input type="password" name="password" class="form-control form-control-user"
                                                 id="exampleInputPassword" placeholder="Mot de passe">
                                         </div>
                                         <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Se souvenir de moi</label>
-                                            </div>
+                                            <input type="password" name="repet_password" class="form-control form-control-user"
+                                                id="exampleInputPassword" placeholder="Confirmer le mot de passe">
                                         </div>
-                                        <button type="submit" name ="submit" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" name ="submit"class="btn btn-primary btn-user btn-block">
                                             Connexion
                                         </button>
                                     </form>
@@ -128,10 +137,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     </div>
 
-        <?php if (isset($erreur)) { ?>
-            <p style="color:red;"><?php echo $erreur; ?></p>
-        <?php } ?>
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -143,4 +148,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="js/sb-admin-2.min.js"></script>
 
 </body>
-</html>
+
+</html>   
