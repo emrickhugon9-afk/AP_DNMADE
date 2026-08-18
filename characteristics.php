@@ -73,7 +73,6 @@
                                 $requete = $db->prepare('SELECT * FROM CRITERIA');
                                 $requete->execute();
                                 $criteres = $requete->fetchAll();
-
                                 $requete = $db->prepare('SELECT * FROM CHARACTERISTICS ORDER BY id_criteria ASC');
                                 $requete->execute();
                                 $caracteristiques = $requete->fetchAll();
@@ -227,8 +226,6 @@
 
                                                 <tr>
 
-                                                    <th>Id</th>
-
                                                     <th>Nom</th>
 
                                                     <th>Critère</th>
@@ -245,10 +242,6 @@
                                                 <?php foreach ($caracteristiques as $caracteristique): ?>
 
                                                     <tr>
-
-                                                        <td>
-                                                            <?= $caracteristique['id_characteristic'] ?>
-                                                        </td>
 
                                                         <td>
                                                             <?= $caracteristique['label'] ?>
