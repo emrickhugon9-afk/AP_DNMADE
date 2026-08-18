@@ -140,7 +140,6 @@
 
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
                                             <th>Nom</th>
                                             <th>Actions</th>
                                         </tr>
@@ -153,10 +152,6 @@
                                         <?php foreach ($criteres as $critere): ?>
 
                                             <tr>
-
-                                                <td>
-                                                    <?= $critere['id_criteria'] ?>
-                                                </td>
 
                                                 <td>
                                                     <?= $critere['criteria'] ?>
