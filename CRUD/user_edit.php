@@ -1,28 +1,27 @@
+<?php
+include 'pdo_config.php';
+try {
+    $requeteInsert = $db->prepare("UPDATE users SET last_name = :last_name, first_name = :first_name, class = :class, email = :email, status = :status WHERE id_user = :id");
 
- 
- <?php   
- include 'pdo_config.php';
- try {    
-   $requeteInsert = $db->prepare("UPDATE users SET last_name = :last_name, first_name = :first_name, email = :email, status = :status WHERE id_user = :id");
+    $requeteInsert->execute([
 
-    $requeteInsert ->execute([
+        'last_name' => $_POST["last_name"],
+        'first_name' => $_POST["first_name"],
+        'class' => $_POST["class"],
+        'email' => $_POST["email"],
+        'status' => $_POST["status"],
+        'id' => $_POST["id"]
 
-'last_name' => $_POST["last_name"],
-'first_name' => $_POST["first_name"],
-'email' => $_POST["email"],
-'status' => $_POST["status"],
-'id' => $_POST["id"]
-
-]);
-}
-catch (PDOException $e) {
+    ]);
+} catch (PDOException $e) {
     $e->getMessage();
 }
 ?>
 
 
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,27 +32,28 @@ catch (PDOException $e) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 </head>
+
 <body class="bg-light d-flex justify-content-center align-items-center vh-100">
 
     <div class="text-center">
         <div class="card shadow p-4">
-            <?php if($e == null)
-            echo "<h1 class=\"text-success\">✔ Succès</h1>
+            <?php if ($e == null)
+                echo "<h1 class=\"text-success\">✔ Succès</h1>
                 <p class=\"mt-3\">Utilisateur modifié avec succès !</p>";
-                else
-                {
-                    
+            else {
+
                 echo "
                 <div class=\"alert alert-danger d-flex align-items-center\" role=\"alert\">
                  " . $e->getMessage() . "
                 </div>
                 <h1 class=\"text-danger\"><i class=\"bi bi-x-circle\"></i> Erreur</h1>
                 <p class=\"mt-3\">Une erreur est survenue lors de la modification de l'utilisateur.</p>";
-                }
+            }
             ?>
             <a href="tables.php" class="btn btn-primary mt-3">Retour à l'accueil</a>
         </div>
     </div>
 
 </body>
+
 </html>

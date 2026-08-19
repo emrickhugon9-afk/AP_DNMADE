@@ -127,6 +127,7 @@
                       <th>Nom</th>
                       <th>Prénom</th>
                       <th>E-mail</th>
+                      <th>Classe</th>
                       <th>Statut</th>
                       <th>Date de création</th>
                       <th>Actions</th>
@@ -140,6 +141,7 @@
                       echo "<tr>";
                       echo "<td>" . $user['last_name'] . "</td>";
                       echo "<td>" . $user['first_name'] . "</td>";
+                      echo "<td>" . $user['class'] . "</td>";
                       echo "<td>" . $user['email'] . "</td>";
                       echo "<td>" . $user['status'] . "</td>";
                       echo "<td>" . $user['created_at'] . "</td>";
@@ -171,6 +173,10 @@
                                 <div class='form-group'>
                                   <label>Prénom</label>
                                   <input type='text' name='first_name' class='form-control' required value='" . $user['first_name'] . "'>
+                                </div>
+                                 <div class='form-group'>
+                                  <label>Classe</label>
+                                  <input type='text' name='class' class='form-control' required value='" . $user['class'] . "'>
                                 </div>
                                 <div class='form-group'>
                                   <label>E-mail</label>

@@ -1,13 +1,14 @@
 <?php
 include 'pdo_config.php';
 try {
-    $requeteInsert = $db->prepare("INSERT INTO users (last_name, first_name, password, email, status, first_login, created_at)
-    VALUES (:last_name, :first_name, :password, :email, :status, :first_login, :created_at)");
+    $requeteInsert = $db->prepare("INSERT INTO users (last_name, first_name, class, password, email, status, first_login, created_at)
+    VALUES (:last_name, :first_name, :class, :password, :email, :status, :first_login, :created_at)");
 
     $requeteInsert->execute([
 
         'last_name' => $_POST["last_name"],
         'first_name' => $_POST["first_name"],
+        'class' => $_POST["class"],
         'password' => sha1($_POST["password"]),
         'email' => $_POST["email"],
         'status' => $_POST["status"],
