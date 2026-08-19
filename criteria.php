@@ -9,7 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>DNMADE - Critères</title>
+    <link rel="icon" type="image/x-icon" href="/img/logo_costumerie.png">
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -140,7 +141,6 @@
 
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
                                             <th>Nom</th>
                                             <th>Actions</th>
                                         </tr>
@@ -153,10 +153,6 @@
                                         <?php foreach ($criteres as $critere): ?>
 
                                             <tr>
-
-                                                <td>
-                                                    <?= $critere['id_criteria'] ?>
-                                                </td>
 
                                                 <td>
                                                     <?= $critere['criteria'] ?>
