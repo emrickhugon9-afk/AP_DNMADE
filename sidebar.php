@@ -1,5 +1,5 @@
  <!-- Sidebar -->
- <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+ <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background: linear-gradient(to right, #EBACA2, #F4CFDF);">
 
      <!-- Sidebar - Brand -->
      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -36,7 +36,7 @@
          </a>
          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
              <div class="bg-white py-2 collapse-inner rounded">
-                 <h6 class="collapse-header">---------</h6>
+                 <!-- <h6 class="collapse-header">---------</h6> -->
                  <a class="collapse-item" href="inventaire.php">Inventaire</a>
              </div>
          </div>
@@ -52,9 +52,8 @@
          <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
              data-parent="#accordionSidebar">
              <div class="bg-white py-2 collapse-inner rounded">
-                 <h6 class="collapse-header">--------</h6>
-                 <a class="collapse-item" href="loan.php">Fiche d'emprunt</a>
-                 <a class="collapse-item" href="loans-history.php">Historique des emprunts</a>
+                 <!-- <h6 class="collapse-header">--------</h6> -->
+                 <a class="collapse-item" href="loans_hist.php">Liste des emprunts</a>
              </div>
          </div>
      </li>
@@ -76,7 +75,7 @@
          </a>
          <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
              <div class="bg-white py-2 collapse-inner rounded">
-                 <h6 class="collapse-header">--------</h6>
+                 <!-- <h6 class="collapse-header">--------</h6> -->
                  <a class="collapse-item" href="users.php">Utilisateurs</a>
                  <a class="collapse-item" href="criteria.php">Critères</a>
                  <a class="collapse-item" href="characteristics.php">Caractéristiques</a>
