@@ -1,13 +1,14 @@
 <?php
 include 'pdo_config.php';
 try {
-    $requeteInsert = $db->prepare("INSERT INTO users (last_name, first_name, password, email, status, first_login, created_at)
-    VALUES (:last_name, :first_name, :password, :email, :status, :first_login, :created_at)");
+    $requeteInsert = $db->prepare("INSERT INTO users (last_name, first_name, class, password, email, status, first_login, created_at)
+    VALUES (:last_name, :first_name, :class, :password, :email, :status, :first_login, :created_at)");
 
     $requeteInsert->execute([
 
         'last_name' => $_POST["last_name"],
         'first_name' => $_POST["first_name"],
+        'class' => $_POST["class"],
         'password' => sha1($_POST["password"]),
         'email' => $_POST["email"],
         'status' => $_POST["status"],
@@ -26,7 +27,8 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Success Page</title>
+    <title>DNMADE - Ajout</title>
+    <link rel="icon" type="image/x-icon" href="/img/logo_costumerie.png">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
