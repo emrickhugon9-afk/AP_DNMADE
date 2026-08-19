@@ -7,9 +7,7 @@ require_once 'config_bdd.php';
 
 $erreur = "";
 
-// CHANGEMENT ICI : On détecte la méthode d'envoi globale
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     if (empty($_POST['login']) || empty($_POST['password'])) {
         $erreur = "Champs obligatoires !";
     }
@@ -29,7 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (password_verify($password, $user['passwords']) || $password == $user['passwords']) {
     
                     $_SESSION['user_id'] = isset($user['id_utilisateurs']) ? $user['id_utilisateurs'] : $user['id_utilisateur'];
-                    $_SESSION['last_activity'] = time(); 
+                    $_SESSION['role'] = $user['statut']; 
+                    $_SESSION['user_name'] = $user['first_name'];
 
                     if ($user['first_log'] == 1) {
                         header("Location: firstlogin.php");

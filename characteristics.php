@@ -90,10 +90,12 @@
                             </h1>
 
                             <!-- Add Button -->
-                            <button type="button"
-                                class="btn btn-primary mb-3"
-                                data-toggle="modal"
-                                data-target="#addModal">
+                            <?php if ($_SESSION['role'] == 'Administrateur'): ?>
+                            <button type="button" 
+                            class="btn btn-primary mb-3" 
+                            data-toggle="modal" 
+                            data-target="#addModal">
+                            <?php endif; ?>
 
                                 <i class="bi bi-plus-circle"></i>
 
@@ -271,7 +273,7 @@
                                                             ?>
 
                                                         </td>
-
+                                                        <?php if ($_SESSION['role'] == 'Administrateur'): ?>
                                                         <td>
                                                             <?php
                                                             echo "
@@ -280,6 +282,7 @@
                                                             ";
                                                             ?>
                                                         </td>
+                                                        <?php endif; ?>
 
                                                     </tr>
 

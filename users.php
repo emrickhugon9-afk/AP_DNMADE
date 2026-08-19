@@ -270,7 +270,7 @@
              <script src='js/users.js'></script>
     ";
                         }
-                        ?>
+                    ?>
                       </tbody>
 
                     </table>

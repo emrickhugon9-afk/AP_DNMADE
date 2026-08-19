@@ -1,3 +1,11 @@
+<?php
+session_start();
+// Vérification simple : si pas connecté, retour au login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
