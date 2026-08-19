@@ -91,6 +91,10 @@
                           <label>Prénom</label>
                           <input type="text" name="first_name" id="userPrenom" class="form-control" required>
                         </div>
+                          <div class="form-group">
+                          <label>Classe</label>
+                          <input type="text" name="class" id="userClass" class="form-control" required>
+                        </div>
                         <div class="form-group">
                           <label>Mot de passe temporaire</label>
                           <input type="password" name="password" id="userPassword" class="form-control" required>
@@ -141,8 +145,8 @@
                       echo "<tr>";
                       echo "<td>" . $user['last_name'] . "</td>";
                       echo "<td>" . $user['first_name'] . "</td>";
-                      echo "<td>" . $user['class'] . "</td>";
                       echo "<td>" . $user['email'] . "</td>";
+                      echo "<td>" . $user['class'] . "</td>";
                       echo "<td>" . $user['status'] . "</td>";
                       echo "<td>" . $user['created_at'] . "</td>";
                       echo "<td>
