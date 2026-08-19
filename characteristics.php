@@ -9,7 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Characteristics</title>
+    <title>DNMADE - Caractéristiques</title>
+    <link rel="icon" type="image/x-icon" href="/img/logo_costumerie.png">
 
     <!-- Custom fonts -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
