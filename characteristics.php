@@ -9,7 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Characteristics</title>
+    <title>DNMADE - Caractéristiques</title>
+    <link rel="icon" type="image/x-icon" href="/img/logo_costumerie.png">
 
     <!-- Custom fonts -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -73,7 +74,6 @@
                                 $requete = $db->prepare('SELECT * FROM CRITERIA');
                                 $requete->execute();
                                 $criteres = $requete->fetchAll();
-
                                 $requete = $db->prepare('SELECT * FROM CHARACTERISTICS ORDER BY id_criteria ASC');
                                 $requete->execute();
                                 $caracteristiques = $requete->fetchAll();
@@ -227,8 +227,6 @@
 
                                                 <tr>
 
-                                                    <th>Id</th>
-
                                                     <th>Nom</th>
 
                                                     <th>Critère</th>
@@ -245,10 +243,6 @@
                                                 <?php foreach ($caracteristiques as $caracteristique): ?>
 
                                                     <tr>
-
-                                                        <td>
-                                                            <?= $caracteristique['id_characteristic'] ?>
-                                                        </td>
 
                                                         <td>
                                                             <?= $caracteristique['label'] ?>
